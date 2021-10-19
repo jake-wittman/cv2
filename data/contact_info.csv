@@ -1,0 +1,6 @@
+Id of contact section,name of icon used to label this contact section,fa=fontawesome;ai=academicon,The actual value written for the contact entry
+loc,icon,type,contact
+email,envelope,fa,wittja01@gmail.com
+twitter,twitter,fa,wittja01
+github,github,fa,github.com/wittja01
+linkedin,linkedin,fa,linkedin.com/in/wittja01
