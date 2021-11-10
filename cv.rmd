@@ -18,6 +18,8 @@ knitr::opts_chunk$set(
 )
 
 library(magrittr) # For the pipe
+library(stringr)
+library(dplyr)
 source("cv_printing_functions.r")
 
 # Read in all data and initialize a CV printer object
@@ -25,6 +27,16 @@ CV <- create_CV_object(
   data_location = "data/",  
   pdf_mode = params$pdf_mode
 )
+
+# Remove the dashes from the article entries so author names aren't bullet pointed
+CV$entries_data <- CV$entries_data %>%
+  mutate(
+    description_bullets = case_when(
+      section == 'academic_articles' ~ str_remove(description_bullets, pattern = "- "),
+      TRUE ~ description_bullets
+    )
+  ) %>% 
+  filter(in_cv == TRUE)
 
 ```
 
@@ -47,14 +59,14 @@ if(params$pdf_mode) {
 Aside
 ================================================================================
 
-```{r}
+```{r interactive-network, include = FALSE}
 # Build interactive network of positions colored by section
 # and connected if they occurred in the same year
 datadrivencv::build_network_logo(CV$entries_data)
 ```
 
 
-```{r}
+```{r view-online}
 if(params$pdf_mode){
   cat("View this CV online with links at _nickstrayer.me/datadrivencv/_")
 } else {
@@ -65,7 +77,7 @@ if(params$pdf_mode){
 Contact {#contact}
 --------------------------------------------------------------------------------
 
-```{r}
+```{r contact}
 CV %>% print_contact_info()
 ```
 
@@ -74,7 +86,7 @@ CV %>% print_contact_info()
 Language Skills {#skills}
 --------------------------------------------------------------------------------
 
-```{r}
+```{r language-skills, eval = FALSE}
 CV %>% print_skill_bars()
 ```
 
@@ -97,9 +109,16 @@ Main
 Jacob Wittman {#title}
 --------------------------------------------------------------------------------
 
-```{r}
+```{r introduction}
 # Note the special double pipe so we modify the CV object in place
 CV %<>% print_text_block("intro") 
+```
+
+Projects {data-icon=laptop data-concise=true}
+--------------------------------------------------------------------------------
+
+```{r projects}
+CV %<>% print_section('projects')
 ```
 
 
@@ -107,85 +126,60 @@ CV %<>% print_text_block("intro")
 Education {data-icon=graduation-cap data-concise=true}
 --------------------------------------------------------------------------------
 
-```{r}
+```{r education}
 CV %<>% print_section('education')
 ```
 
+Publications {data-icon=book}
+--------------------------------------------------------------------------------
 
+```{r academic-articles}
+CV %<>% print_section('academic_articles')
+```
 
-Research Experience {data-icon=laptop}
+Invited Presentations {data-icon=book data-concise=false}
 --------------------------------------------------------------------------------
 
 ```{r}
-CV %<>% print_section('research_positions')
+CV %<>% print_section('invited_presentations')
 ```
 
 
-
-Industry Experience {data-icon=suitcase}
+Contributed Presentations {data-icon=book data-concise=false}
 --------------------------------------------------------------------------------
-
-::: aside
 ```{r}
-CV %<>% print_text_block('industy_experience_aside')
-```
-:::
-
-```{r}
-CV %<>% print_section('industry_positions')
+CV %<>% print_section('contributed_presentations')
 ```
 
-<!-- These breaks just force a new page so section doesnt get cut off -->
-<br>
-<br>
-<br>
+Poster Presentations {data-icon=book data-concise=false}
+--------------------------------------------------------------------------------
+```{r}
+CV %<>% print_section('poster_presentations')
+```
 
 Teaching Experience {data-icon=chalkboard-teacher}
 --------------------------------------------------------------------------------
 
 ::: aside
-```{r}
+```{r teaching-experience}
 CV %<>% print_text_block('teaching_experience_aside')
 ```
 :::
 
-```{r}
+```{r teaching-positions}
 CV %<>% print_section('teaching_positions')
 ```
 
-
-
-Selected Press (About)  {data-icon=newspaper}
+Grants, Honors, and Awards
 --------------------------------------------------------------------------------
 
+
 ```{r}
-CV %<>% print_section('about_me_press')
+CV %<>% print_section('grants_honors_awards')
 ```
 
 
-<br>
-<br>
-
-
-Selected Press (By)  {data-icon=newspaper}
---------------------------------------------------------------------------------
-
-```{r}
-CV %<>% print_section('by_me_press')
-```
-
-
-
-Selected Publications, Posters, and Talks {data-icon=book}
---------------------------------------------------------------------------------
-
-```{r}
-CV %<>% print_section('academic_articles')
-```
-
-
-
-```{r}
+```{r links, include = FALSE}
 CV %<>% print_links()
 ```
 
