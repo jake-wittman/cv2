@@ -1,8 +1,9 @@
 ﻿Name of language,
 skill,level
-Expert in communicating technical material to non-technical audiences,5
-Expert in R and R Studio,5
-GitHub/git,5
+Communicating technical material to non-technical audiences,5
+R and R Studio,5
+Data Visualization (R and Shiny),5
+git & GitHub,5
 HPC with R,5
 Relational Databases,5
-Some Python and SQL,5
+Basic Python and SQL,5
