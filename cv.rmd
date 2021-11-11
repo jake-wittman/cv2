@@ -59,7 +59,7 @@ if(params$pdf_mode) {
 Aside
 ================================================================================
 
-```{r interactive-network, include = FALSE}
+```{r interactive-network, include = TRUE}
 # Build interactive network of positions colored by section
 # and connected if they occurred in the same year
 datadrivencv::build_network_logo(CV$entries_data)
@@ -83,7 +83,7 @@ CV %>% print_contact_info()
 
 
 
-Language Skills {#skills}
+Skills {#skills}
 --------------------------------------------------------------------------------
 
 ```{r language-skills, eval = FALSE}

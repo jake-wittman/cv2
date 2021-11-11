@@ -1,0 +1,165 @@
+---
+title: "Jacob Wittman's Resume"
+author: Jacob Wittman
+date: "`r Sys.Date()`"
+params:
+  pdf_mode:
+    value: true
+output:
+  pagedown::html_resume:
+    css: ['dd_cv.css', 'resume']
+    self_contained: true
+---
+
+```{r, include=FALSE}
+knitr::opts_chunk$set(
+  results='asis', 
+  echo = FALSE
+)
+
+library(magrittr) # For the pipe
+library(stringr)
+library(dplyr)
+source("cv_printing_functions.r")
+
+# Read in all data and initialize a CV printer object
+CV <- create_CV_object(
+  data_location = "data/",  
+  pdf_mode = params$pdf_mode
+)
+
+# Remove the dashes from the article entries so author names aren't bullet pointed
+CV$entries_data <- CV$entries_data %>%
+  mutate(
+    description_bullets = case_when(
+      section == 'academic_articles' ~ str_remove(description_bullets, pattern = "- "),
+      TRUE ~ description_bullets
+    )
+  ) %>% 
+  filter(in_resume == TRUE)
+
+# Edit some of the entries for the resume
+CV$entries_data <- CV$entries_data %>% 
+  mutate(description_bullets = case_when(section == 'teaching_positions' & title != 'Guest Lecturer' ~ "",
+                                         section == 'grants_honors_awards'  ~ "",
+                                         section == 'education' ~ "",
+                                         TRUE ~ description_bullets))
+
+```
+
+<!-- not very elegant solution for using academicons -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+
+```{r}
+# When in pdf export mode the little dots are unaligned, so fix that with some conditional CSS.
+if(params$pdf_mode) {
+    cat("
+<style>
+:root{
+  --decorator-outer-offset-left: -6.5px;
+}
+</style>")
+}
+```
+
+
+Aside
+================================================================================
+
+```{r introduction}
+# Note the special double pipe so we modify the CV object in place
+CV %<>% print_text_block("intro") 
+```
+
+
+```{r view-online, include = FALSE}
+if(params$pdf_mode){
+  cat("View this CV online with links at _github.com/wittja01/cv2_")
+} else {
+  cat("[<i class='fas fa-download'></i> Download a PDF of this CV](https://github.com/wittja01/cv2/blob/main/cv.pdf)")
+}
+```
+
+Contact {#contact}
+--------------------------------------------------------------------------------
+
+```{r contact}
+CV %>% print_contact_info()
+```
+
+
+
+Skills {#skills}
+--------------------------------------------------------------------------------
+
+```{r language-skills}
+CV %>% print_skill_bars()
+```
+
+
+
+Disclaimer {#disclaimer}
+--------------------------------------------------------------------------------
+
+Made with the R package [**pagedown**](https://github.com/rstudio/pagedown). 
+
+The source code is available [on github.com/nstrayer/cv](https://github.com/nstrayer/datadrivencv).
+
+Last updated on `r Sys.Date()`.
+
+
+
+Main
+================================================================================
+
+Jacob Wittman {#title}
+--------------------------------------------------------------------------------
+
+
+Projects {data-icon=laptop data-concise=true}
+--------------------------------------------------------------------------------
+
+```{r projects}
+CV %<>% print_section('projects')
+```
+
+
+
+Education {data-icon=graduation-cap data-concise=true}
+--------------------------------------------------------------------------------
+
+```{r education}
+CV %<>% print_section('education')
+```
+
+
+Publications {data-icon=book}
+--------------------------------------------------------------------------------
+::: aside
+```{r publications-aside}
+CV %<>% print_text_block('resume_publication_aside')
+```
+:::
+
+```{r academic-articles}
+CV %<>% print_section('academic_articles')
+```
+
+<br>
+<br>
+<br>
+
+Selected Teaching Experience {data-icon=chalkboard-teacher}
+--------------------------------------------------------------------------------
+
+::: aside
+```{r teaching-experience}
+CV %<>% print_text_block('teaching_experience_aside')
+```
+:::
+
+```{r teaching-positions}
+CV %<>%  print_section('teaching_positions')
+```
+
+

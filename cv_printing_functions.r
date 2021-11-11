@@ -114,16 +114,16 @@ sanitize_links <- function(cv, text){
       # add links to links array
       cv$links <- c(cv$links, link_destinations)
 
-      # Build map of link destination to superscript
-      link_superscript_mappings <- purrr::set_names(
-        paste0("<sup>", (1:n_new_links) + n_links, "</sup>"),
-        paste0("(", link_destinations, ")")
-      )
-
-      # Replace the link destination and remove square brackets for title
-      text <- text %>%
-        stringr::str_replace_all(stringr::fixed(link_superscript_mappings)) %>%
-        stringr::str_replace_all('\\[(.+?)\\]', "\\1")
+      # # Build map of link destination to superscript
+      # link_superscript_mappings <- purrr::set_names(
+      #   paste0("<sup>", (1:n_new_links) + n_links, "</sup>"),
+      #   paste0("(", link_destinations, ")")
+      # )
+      # 
+      # # Replace the link destination and remove square brackets for title
+      # text <- text %>%
+      #   stringr::str_replace_all(stringr::fixed(link_superscript_mappings)) %>%
+      #   stringr::str_replace_all('\\[(.+?)\\]', "\\1")
     }
   }
 
@@ -185,7 +185,9 @@ print_text_block <- function(cv, label){
 
 #' @description Construct a bar chart of skills
 #' @param out_of The relative maximum for skills. Used to set what a fully filled in skill bar is.
-print_skill_bars <- function(cv, out_of = 5, bar_color = "#969696", bar_background = "#d9d9d9", glue_template = "default"){
+#' I don't want to use the bar but I can't figure out how to get rid of them
+#' so I'll set the color the same as the sidebar background
+print_skill_bars <- function(cv, out_of = 5, bar_color = "#f7fbff", bar_background = "#f7fbff", glue_template = "default"){
 
   if(glue_template == "default"){
     glue_template <- "

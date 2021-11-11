@@ -8,6 +8,8 @@ body {
   color: #444;
 }
 
+
+
 /* Give headers playfair font */
 h1,
 h2,
@@ -29,18 +31,22 @@ sup {
 
 * {
   /* Override default right margin for sidebar*/
-  --pagedjs-margin-right: 0.2in;
-  --pagedjs-margin-left: 0.2in;
+  --pagedjs-margin-right: 0.15in;
+  --pagedjs-margin-left: 0.15in;
+  --pagedjs-margin-top: 0.2in;
+  --pagedjs-margin-bottom: 0.3in;
 }
 
 /* Customize some of the sizing variables */
 :root {
-  --sidebar-width: 11rem; /* Shrink sidebar width  */
+  --sidebar-width: 12rem; /* Shrink sidebar width  */
   --sidebar-background-color: #f7fbff; /* Make sidebar blue */
   --sidebar-horizontal-padding: 0.01in; /* Reduce sidebar padding */
   --decorator-outer-dim: 10px; /* Make position deliniating circles larger */
   --decorator-border: 2px solid #bdd7e7; /* Make timeline a blue as well*/
 }
+
+
 
 .details .place {
   margin-top: 0.25rem;
@@ -94,7 +100,7 @@ sup {
 }
 
 .skill-bar {
-  color: white;
+  color: black;
   padding: 0.1rem 0.25rem;
   margin-top: 3px;
   position: relative;
