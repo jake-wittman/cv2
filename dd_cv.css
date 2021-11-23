@@ -40,7 +40,7 @@ sup {
 /* Customize some of the sizing variables */
 :root {
   --sidebar-width: 12rem; /* Shrink sidebar width  */
-  --sidebar-background-color: #727273 !important; /* Make sidebar blue */
+  --sidebar-background-color: #b8e4fd; /* Make sidebar blue */
   --sidebar-horizontal-padding: 0.01in; /* Reduce sidebar padding */
   --decorator-outer-dim: 10px; /* Make position deliniating circles larger */
   --decorator-border: 2px solid #bdd7e7; /* Make timeline a blue as well*/
@@ -127,4 +127,9 @@ sup {
   padding: 0.5rem;
   margin: 0.5rem;
   box-shadow: 1px 1px 4px black;
+}
+
+/* fix the gradient issue */
+@page {
+    background: 0% 0% / 100% 0.1% linear-gradient(to left, var(--sidebar-background-color) var(--sidebar-background-width), white var(--sidebar-background-width));
 }

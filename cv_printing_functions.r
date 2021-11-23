@@ -187,7 +187,7 @@ print_text_block <- function(cv, label){
 #' @param out_of The relative maximum for skills. Used to set what a fully filled in skill bar is.
 #' I don't want to use the bar but I can't figure out how to get rid of them
 #' so I'll set the color the same as the sidebar background
-print_skill_bars <- function(cv, out_of = 5, bar_color = "#f7fbff", bar_background = "#f7fbff", glue_template = "default"){
+print_skill_bars <- function(cv, out_of = 5, bar_color = "#b8e4fd", bar_background = "#b8e4fd", glue_template = "default"){
 
   if(glue_template == "default"){
     glue_template <- "
