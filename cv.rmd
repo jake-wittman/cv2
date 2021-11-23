@@ -62,7 +62,7 @@ Aside
 
 ```{r view-online}
 if(params$pdf_mode){
-  cat("View this CV online with links at _github.com/wittja01/cv2_")
+  cat("")
 } else {
   cat("[<i class='fas fa-download'></i> Download a PDF of this CV](https://github.com/wittja01/cv2/blob/main/cv.pdf)")
 }
@@ -84,15 +84,6 @@ Skills {#skills}
 CV %>% print_skill_bars()
 ```
 
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
 
 Disclaimer {#disclaimer}
 --------------------------------------------------------------------------------
