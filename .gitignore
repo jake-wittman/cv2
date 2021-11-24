@@ -4,3 +4,8 @@
 .httr-oauth
 .DS_Store
 
+# Ignore specific resumes if I make changes for them
+resume_*
+
+# Ignore cover letters I draft
+cover_letters/*

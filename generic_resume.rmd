@@ -98,13 +98,6 @@ CV %>% print_skill_bars()
 
 
 
-Disclaimer {#disclaimer}
---------------------------------------------------------------------------------
-
-Made with the R packages [**pagedown**](https://github.com/rstudio/pagedown) and [**datadrivencv**](https://github.com/nstrayer/datadrivencv).
-
-Last updated on `r Sys.Date()`.
-
 
 
 Main
@@ -125,6 +118,12 @@ CV %<>% print_section('projects')
 
 Education {data-icon=graduation-cap data-concise=true}
 --------------------------------------------------------------------------------
+::: aside
+
+Made with the R packages [**pagedown**](https://github.com/rstudio/pagedown) and [**datadrivencv**](https://github.com/nstrayer/datadrivencv).
+
+Last updated on `r Sys.Date()`.
+:::
 
 ```{r education}
 CV %<>% print_section('education')
@@ -159,5 +158,6 @@ CV %<>% print_text_block('teaching_experience_aside')
 ```{r teaching-positions}
 CV %<>%  print_section('teaching_positions')
 ```
+
 
 
