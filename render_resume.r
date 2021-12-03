@@ -21,3 +21,22 @@ rmarkdown::render(paste0(file_name, '.rmd'),
 # Convert to PDF using Pagedown
 pagedown::chrome_print(input = tmp_html_cv_loc,
                        output = paste0(file_name, '.pdf'))
+
+################################################################################
+# Render one page resume
+file_name <- 'onepage_resume'
+
+# Knit the HTML version
+rmarkdown::render(paste0(file_name, '.rmd'),
+                  params = list(pdf_mode = FALSE),
+                  output_file = paste0(file_name, '.html'))
+
+# Knit the PDF version to temporary html location
+tmp_html_cv_loc <- fs::file_temp(ext = ".html")
+rmarkdown::render(paste0(file_name, '.rmd'),
+                  params = list(pdf_mode = TRUE),
+                  output_file = tmp_html_cv_loc)
+
+# Convert to PDF using Pagedown
+pagedown::chrome_print(input = tmp_html_cv_loc,
+                       output = paste0(file_name, '.pdf'))

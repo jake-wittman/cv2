@@ -13,9 +13,11 @@
 #'   to be stripped?
 #' @param sheet_is_publicly_readable If you're using google sheets for data,
 #'   is the sheet publicly available? (Makes authorization easier.)
+#' @param short_description Should only the short descriptions be used?
 #' @return A new `CV_Printer` object.
 create_CV_object <-  function(data_location,
                               pdf_mode = FALSE,
+                              short_description = FALSE,
                               sheet_is_publicly_readable = TRUE) {
 
   cv <- list(
@@ -70,32 +72,67 @@ create_CV_object <-  function(data_location,
   }
 
   # Clean up entries dataframe to format we need it for printing
-  cv$entries_data %<>%
-    tidyr::unite(
-      tidyr::starts_with('description'),
-      col = "description_bullets",
-      sep = "\n- ",
-      na.rm = TRUE
-    ) %>%
-    dplyr::mutate(
-      description_bullets = ifelse(description_bullets != "", paste0("- ", description_bullets), ""),
-      start = ifelse(start == "NULL", NA, start),
-      end = ifelse(end == "NULL", NA, end),
-      start_year = extract_year(start),
-      end_year = extract_year(end),
-      no_start = is.na(start),
-      has_start = !no_start,
-      no_end = is.na(end),
-      has_end = !no_end,
-      timeline = dplyr::case_when(
-        no_start  & no_end  ~ "N/A",
-        no_start  & has_end ~ as.character(end),
-        has_start & no_end  ~ paste("Current", "-", start),
-        TRUE                ~ paste(end, "-", start)
-      )
-    ) %>%
-    dplyr::arrange(desc(parse_dates(end))) %>%
-    dplyr::mutate_all(~ ifelse(is.na(.), 'N/A', .))
+  if (short_description == FALSE) {
+    cv$entries_data %<>%
+      select(!contains('short_description')) %>% 
+      tidyr::unite(
+        tidyr::starts_with('description'),
+        col = "description_bullets",
+        sep = "\n- ",
+        na.rm = TRUE
+      ) %>%
+      dplyr::mutate(
+        description_bullets = ifelse(description_bullets != "", paste0("- ", description_bullets), ""),
+        start = ifelse(start == "NULL", NA, start),
+        end = ifelse(end == "NULL", NA, end),
+        start_year = extract_year(start),
+        end_year = extract_year(end),
+        no_start = is.na(start),
+        has_start = !no_start,
+        no_end = is.na(end),
+        has_end = !no_end,
+        timeline = dplyr::case_when(
+          no_start  & no_end  ~ "N/A",
+          no_start  & has_end ~ as.character(end),
+          has_start & no_end  ~ paste("Current", "-", start),
+          TRUE                ~ paste(end, "-", start)
+        )
+      ) %>%
+      dplyr::arrange(desc(parse_dates(end))) %>%
+      dplyr::mutate_all(~ ifelse(is.na(.), 'N/A', .))
+  } else {
+    cv$entries_data %<>%
+      # Move the short description into description_1 and erase other columns if present
+      mutate(across(starts_with('description'), ~ case_when(!is.na(short_description_1) ~ NA_character_,
+                                                            TRUE ~ .))) %>% 
+      mutate(description_1 = case_when(!is.na(short_description_1) ~ short_description_1,
+                                       TRUE ~ description_1)) %>% 
+      tidyr::unite(
+        tidyr::starts_with('description'),
+        col = "description_bullets",
+        sep = "\n- ",
+        na.rm = TRUE
+      ) %>%
+      dplyr::mutate(
+        description_bullets = ifelse(description_bullets != "", paste0(description_bullets), ""),
+        start = ifelse(start == "NULL", NA, start),
+        end = ifelse(end == "NULL", NA, end),
+        start_year = extract_year(start),
+        end_year = extract_year(end),
+        no_start = is.na(start),
+        has_start = !no_start,
+        no_end = is.na(end),
+        has_end = !no_end,
+        timeline = dplyr::case_when(
+          no_start  & no_end  ~ "N/A",
+          no_start  & has_end ~ as.character(end),
+          has_start & no_end  ~ paste("Current", "-", start),
+          TRUE                ~ paste(end, "-", start)
+        )
+      ) %>%
+      dplyr::arrange(desc(parse_dates(end))) %>%
+      dplyr::mutate_all(~ ifelse(is.na(.), 'N/A', .))
+  }
 
   cv
 }

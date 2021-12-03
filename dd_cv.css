@@ -4,11 +4,9 @@
 body {
   font-family: "Montserrat", sans-serif;
   font-weight: 300;
-  line-height: 1.3;
+  line-height: 1.05;
   color: #444;
 }
-
-
 
 /* Give headers playfair font */
 h1,
@@ -53,7 +51,7 @@ sup {
 }
 
 .main-block:not(.concise) .details div {
-  padding-top: 0.005rem;
+  padding-top: 0.001rem;
 }
 
 /* Laptop icon isn't centered by default which is lame */

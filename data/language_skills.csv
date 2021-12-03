@@ -3,10 +3,9 @@ skill,level
 Supervised and unsupervised machine learning,5
 Experimental design and inference,5
 Bayesian and Frequentist statistical methods,5
-Communicating technical material to non-technical audiences,5
-R and R Studio,5
-Data Visualization (R and Shiny),5
+R Programming,5
+R Shiny Dashboards,5
 git & GitHub,5
-HPC with R,5
-Relational Databases,5
-Basic Python and SQL,5
+High Performance Computing with R,5
+Basic Python,5
+Basic SQL,5
