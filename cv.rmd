@@ -59,15 +59,6 @@ if(params$pdf_mode) {
 Aside
 ================================================================================
 
-
-```{r view-online}
-if(params$pdf_mode){
-  cat("")
-} else {
-  cat("[<i class='fas fa-download'></i> Download a PDF of this CV](https://github.com/wittja01/cv2/blob/main/cv.pdf)")
-}
-```
-
 Contact {#contact}
 --------------------------------------------------------------------------------
 
@@ -90,6 +81,15 @@ CV %>% print_skill_bars()
 Disclaimer {#disclaimer}
 --------------------------------------------------------------------------------
 
+```{r view-online}
+if(params$pdf_mode){
+  cat("")
+} else {
+  cat("[<i class='fas fa-download'></i> Download a PDF of this CV](https://github.com/wittja01/cv2/blob/main/cv.pdf)")
+}
+```
+
+<br>
 <br>
 <br>
 

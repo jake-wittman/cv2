@@ -25,19 +25,19 @@ source("cv_printing_functions.r")
 # Read in all data and initialize a CV printer object
 CV <- create_CV_object(
   pdf_mode = params$pdf_mode,
-  short_description = TRUE,
+  short_description = FALSE,
   data_location = "data/" 
  
 )
 
 # Remove the dashes from the article entries so author names aren't bullet pointed
+# Also we're going to group teaching experience with projects and just call it 
+# all experience
 CV$entries_data <- CV$entries_data %>%
-  mutate(
-    description_bullets = case_when(
-      section == 'academic_articles' ~ str_remove(description_bullets, pattern = "- "),
-      TRUE ~ description_bullets
-    )
-  ) %>% 
+  mutate(section = case_when(section == 'teaching_positions' ~ 'projects',
+                        TRUE ~ section)) %>% 
+  mutate(section = case_when(secondary_section == 'experience' ~ 'experience',
+                            TRUE ~ section)) %>% 
   filter(in_resume == TRUE)
 
 
@@ -106,39 +106,17 @@ Jacob Wittman {#title}
 --------------------------------------------------------------------------------
 
 
-Projects {data-icon=laptop data-concise=true}
+Experience {data-icon=laptop data-concise=true}
 --------------------------------------------------------------------------------
 
 ```{r projects}
-CV %<>% print_section('projects')
+CV %<>% print_section('experience')
 ```
 
 
 Education {data-icon=graduation-cap data-concise=true}
 --------------------------------------------------------------------------------
 ::: aside
-
-<br>
-
-<br>
-
-<br>
-
-<br>
-
-<br>
-
-<br>
-
-<br>
-
-<br>
-
-<br>
-
-<br>
-
-<br>
 
 ```{r publications-aside}
 CV %<>% print_text_block('short_resume_pubs')
@@ -149,27 +127,16 @@ CV %<>% print_text_block('short_resume_pubs')
 CV %<>% print_section('education')
 ```
 
-
-
-Selected Teaching Experience {data-icon=chalkboard-teacher}
---------------------------------------------------------------------------------
-
 ::: aside
 
-
 <br>
 
 <br>
 
-<br>
 
 Made with the R packages [**pagedown**](https://github.com/rstudio/pagedown) and [**datadrivencv**](https://github.com/nstrayer/datadrivencv).
 
 Last updated on `r Sys.Date()`.
 :::
-
-```{r teaching-positions}
-CV %<>%  print_section('teaching_positions')
-```
 
 

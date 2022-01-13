@@ -21,6 +21,9 @@ pagedown::chrome_print(input = tmp_html_cv_loc,
                        output = "cv.pdf")
 
 # Render CV in the folder for my website
-website_path <- "F:/Documents/personal_website/cv/cv.pdf"
-pagedown::chrome_print(input = tmp_html_cv_loc,
-                       output = website_path)
+website_path <- "F:/Documents/personal_website/cv.html"
+# pagedown::chrome_print(input = tmp_html_cv_loc,
+#                        output = website_path) # For pdf
+rmarkdown::render("cv.rmd",
+                  params = list(pdf_mode = FALSE),
+                  output_file = website_path)
